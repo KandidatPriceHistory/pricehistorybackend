@@ -10,7 +10,6 @@ function getProduct(){
     .then((response) => {
       console.log(response.data);
       // const dataResponse = response.data;
-      postProduct(getNecessesaryData(response.data));
     })
     .catch((err) => {
     console.log('error noooo')
@@ -18,24 +17,8 @@ function getProduct(){
   //setTimeout(getProduct(), 10000);
 };
 
-function postProduct(productdata){
-  axios.post('https://localhost:3000/products', {productdata})
-    .then((response) => {
-      console.log("POSTPRODUCT: " + response);
-    })
-    .catch((err) => {
-    console.log('error noooo')
-  });
-};
 
-const getNecessesaryData = (someData) => {
-  return {
-    name: someData.name,
-    manufacturer: someData.manufacturer,
-    minPrice: someData.manufacturer,
-    id: someData.id
-  }
-};
+
 
 
 /*
