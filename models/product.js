@@ -46,14 +46,6 @@ const ProductSchema = new mongoose.Schema(
 					type: String,
 					required: true,
 				},
-				price: {
-					type: String,
-					required: true,
-				},
-				currency:{
-					type: String,
-					required: true,
-				},
 				productName: {
 					type: String,
 					required: true,
@@ -65,7 +57,24 @@ const ProductSchema = new mongoose.Schema(
 				retailerName: {
 					type: String,
 					required: true,
+				},
+
+				priceHistory: [
+					{
+					price: {
+						type: String,
+						required: true,
+					},
+					currency: {
+						type: String,
+						required: true,
+					},
+					date: {
+						type: String,
+						required: true,
+					}
 				}
+				]
 			}
 		],
 		name:{
