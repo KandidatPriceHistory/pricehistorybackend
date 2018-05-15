@@ -1,15 +1,20 @@
-import axios from 'axios';
-import ProductSchema from "./models/product";
-import Pricehistory from "./models/pricehistory";
+// import axios from 'axios';
+// import ProductSchema from "./models/product";
+// import Pricehistory from "./models/pricehistory";
 
+const axios = require('axios');
 const errors = require('restify-errors');
 
-const Pricehistory = require('../models/pricehistory');
+const Pricehistory = require('./models/pricehistory');
 
-export function getProduct(){
-  axios.get('http://localhost:3000/retailers')
+server.get('/getProduct', function(req,res,next) {
+  getProduct();
+})
+
+function getProduct(){
+  axios.get('http://localhost:3000/pricehistory')
     .then((response) => {
-      console.log(response.data);
+      console.log('response:',response.data);
       // const dataResponse = response.data
       saveProduct(response.data);
     })
@@ -22,25 +27,14 @@ export function getProduct(){
 };
 
 function saveProduct(data){
-  server.post('/pricehistory', (req, res) => {
-    if (!req.is('application/json')) {
-      return next(
-        new errors.InvalidContentError("Expects 'application/json'"),
-      );
-  }
-  let data = req.body || {};
   //create an instance of model Pricehistory
-  let pricehistory = new Pricehistory(data);
+  let pricehistory = new Pricehistory(data[0]);
   // save the new model instance, passing a callback
   pricehistory.save(function(err) {
     if (err) {
       console.error(err);
-      return next(new errors.InternalError(err.message));
-      next();
-      //saved!
     }
-    res.send(201);
-    next();
+    console.log('product saved, product: ',pricehistory)
+    //saved!
   });
-});
-};
+}

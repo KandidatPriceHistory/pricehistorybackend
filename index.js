@@ -1,4 +1,3 @@
-import getProduct from "./api.js";
 
 //entry point for our REST API (noga med ordiningen av resurser
 //1. module dep. 2. server inizialisation 3. Middleware 4. start server)
@@ -6,6 +5,7 @@ import getProduct from "./api.js";
 /**
  * Module Dependencies
  */
+ // const getProduct = require('./api.js');
 const config = require('./config');
 const restify = require('restify');
 const mongoose = require('mongoose');
@@ -46,8 +46,9 @@ server.listen(config.port, () => {
 	    require('./routes/product');
 			require('./routes/retailer');
 			require('./routes/pricehistory');
+			require('./api');
 	    console.log(`Server is listening on port ${config.port}`);
 	});
-	
-	getProduct();
+
+	// getProduct();
 });
