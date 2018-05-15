@@ -28,13 +28,15 @@ const Pricehistory = require('../models/pricehistory');
 		}
 
 		let data = req.body || {};
-
+//create an instance of model Pricehistory
 		let pricehistory = new Pricehistory(data);
+// save the new model instance, passing a callback
 		pricehistory.save(function(err) {
 			if (err) {
 				console.error(err);
 				return next(new errors.InternalError(err.message));
 				next();
+				//saved!
 			}
 
 			res.send(201);

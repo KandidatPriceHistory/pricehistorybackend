@@ -5,6 +5,7 @@ const timestamps = require('mongoose-timestamp');
 /* Our `mongoose-timestamp` module will add the createdAt and updatedAt
 timestamps for us, and MongoDB will automatically generate a UUID called _id.
 */
+//define mogoose schema
 const PricehistorySchema = new mongoose.Schema(
 	{
     productid: {
@@ -31,4 +32,7 @@ PricehistorySchema.plugin(timestamps);
 PricehistorySchema.plugin(mongooseStringQuery);
 
 const Pricehistory = mongoose.model('Pricehistory', PricehistorySchema);
-module.exports = Pricehistory;
+//compile model from schema
+//module.exports = Pricehistory;
+
+export default Pricehistory;

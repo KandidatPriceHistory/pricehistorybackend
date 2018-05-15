@@ -1,5 +1,8 @@
+import getProduct from "./api.js";
+
 //entry point for our REST API (noga med ordiningen av resurser
 //1. module dep. 2. server inizialisation 3. Middleware 4. start server)
+
 /**
  * Module Dependencies
  */
@@ -45,4 +48,6 @@ server.listen(config.port, () => {
 			require('./routes/pricehistory');
 	    console.log(`Server is listening on port ${config.port}`);
 	});
+	
+	getProduct();
 });

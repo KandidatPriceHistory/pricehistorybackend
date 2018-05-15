@@ -1,49 +1,46 @@
 import axios from 'axios';
-import ProductSchema from " ./models/product";
+import ProductSchema from "./models/product";
+import Pricehistory from "./models/pricehistory";
 
-/*window.setInterval(function(){
-  console.log('each second');
-}, 1000)*/
+const errors = require('restify-errors');
 
-function getProduct(){
-  axios.get('https://www.pricerunner.se/public/v1/pl/1-4257585/se?urlName=Mobiltelefoner/Apple-iPhone-X-64GB-priser&offer_sort=pricewithship')
+const Pricehistory = require('../models/pricehistory');
+
+export function getProduct(){
+  axios.get('http://localhost:3000/retailers')
     .then((response) => {
       console.log(response.data);
-      // const dataResponse = response.data;
+      // const dataResponse = response.data
+      saveProduct(response.data);
     })
     .catch((err) => {
     console.log('error noooo')
   });
-  //setTimeout(getProduct(), 10000);
+
+  //PriceRunner API: https://www.pricerunner.se/public/v1/pl/1-4257585/se?urlName=Mobiltelefoner/Apple-iPhone-X-64GB-priser&offer_sort=pricewithship
+  //setTimeout(getProduct(), 1000);
 };
 
-
-
-
-
-/*
-axios.get("https://www.pricerunner.se/public/v1/pl/1-4257585/se?urlName=Mobiltelefoner/Apple-iPhone-X-64GB-priser&offer_sort=pricewithship")
-      .then((response) => {
-
-        console.log(response.data);
-        // const dataResponse = response.data;
-            })
-      .catch((err) => {
-        console.log('error noooo')
-      })
-
-axios({
-  method: 'post',
-  url: 'http://pricehistorybackend.herokuapp.com/',
-  data: {
-    product: 'iPhone',
-    id: '1',
+function saveProduct(data){
+  server.post('/pricehistory', (req, res) => {
+    if (!req.is('application/json')) {
+      return next(
+        new errors.InvalidContentError("Expects 'application/json'"),
+      );
   }
-})
-
-/*
-axios.post('/products', { id: '1' })
-  .then((response) => {
-    console.log('saved');
-  })
-*/
+  let data = req.body || {};
+  //create an instance of model Pricehistory
+  let pricehistory = new Pricehistory(data);
+  // save the new model instance, passing a callback
+  pricehistory.save(function(err) {
+    if (err) {
+      console.error(err);
+      return next(new errors.InternalError(err.message));
+      next();
+      //saved!
+    }
+    res.send(201);
+    next();
+  });
+});
+};
