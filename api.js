@@ -1,6 +1,3 @@
-// import axios from 'axios';
-// import ProductSchema from "./models/product";
-// import Pricehistory from "./models/pricehistory";
 
 const axios = require('axios');
 const errors = require('restify-errors');
@@ -15,8 +12,10 @@ function getProduct(){
   axios.get('http://localhost:3000/pricehistory')
     .then((response) => {
       console.log('response:',response.data);
+      const resObj = response.data[0]
       // const dataResponse = response.data
-      saveProduct(response.data);
+      saveProduct(resObj.productid, resObj.retailerid,
+      resObj.price, resObj.updatedAt);
     })
     .catch((err) => {
     console.log('error noooo')
@@ -26,15 +25,15 @@ function getProduct(){
   //setTimeout(getProduct(), 1000);
 };
 
-function saveProduct(data){
-  //create an instance of model Pricehistory
-  let pricehistory = new Pricehistory(data[0]);
-  // save the new model instance, passing a callback
-  pricehistory.save(function(err) {
-    if (err) {
-      console.error(err);
-    }
-    console.log('product saved, product: ',pricehistory)
-    //saved!
+function saveProduct(productid, retailerid, price, date){
+
+  let pricehistory = new Pricehistory({productid, retailerid, price, date});
+  axios.post('http://localhost:3000/pricehistory', pricehistory)
+    .then (function(response){
+      console.log('saved successfully ')
+  })
+    .catch((err) => {
+      console.error('error!',err);
   });
+
 }
