@@ -10,7 +10,6 @@ const RetailerSchema = new mongoose.Schema(
     retailerid: {
       type: Number,
       required: true,
-      trim: true,
     },
 		retailerName:{
       type: String,
@@ -19,7 +18,6 @@ const RetailerSchema = new mongoose.Schema(
     retailerLogo: {
 			type: String,
 			required: true,
-			trim: true,
 		},
 	},
 	{ minimize: false },
