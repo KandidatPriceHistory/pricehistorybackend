@@ -8,7 +8,7 @@ timestamps for us, and MongoDB will automatically generate a UUID called _id.
 const RetailerSchema = new mongoose.Schema(
 	{
     retailerid: {
-      type: Number,
+      type: String,
       required: true,
     },
 		retailerName:{
