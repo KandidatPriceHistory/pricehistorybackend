@@ -18,7 +18,7 @@ const ProductSchema = new mongoose.Schema(
 			name: {
 				type: String,
 				required: true,
-			}
+			},
 			id: {
 				type: String,
 				required: true,
@@ -44,7 +44,7 @@ const ProductSchema = new mongoose.Schema(
 				required: true,
 			}
 		},
-		name:{
+		name: {
       type: String,
       required: true,
     },
