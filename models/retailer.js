@@ -19,6 +19,12 @@ const RetailerSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		retailersProducts: [
+			id:{
+				type: String,
+				required: true,
+			}
+		],
 	},
 	{ minimize: false },
 );
