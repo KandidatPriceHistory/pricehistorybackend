@@ -20,10 +20,12 @@ const RetailerSchema = new mongoose.Schema(
 			required: true,
 		},
 		retailersProducts: [
-			id:{
-				type: String,
-				required: true,
+			{
+				productid: {
+					type: String,
+					required: true,
 			}
+		}
 		],
 	},
 	{ minimize: false },
