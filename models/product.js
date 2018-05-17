@@ -24,26 +24,6 @@ const ProductSchema = new mongoose.Schema(
 				required: true,
 			}
 		},
-		minPrice: {
-			value: {
-				type: String,
-				required: true,
-			},
-			currency: {
-				type: String,
-				required: true,
-			}
-		},
-		maxPrice: {
-			value: {
-				type: String,
-				required: true,
-			},
-			currency: {
-				type: String,
-				required: true,
-			}
-		},
 		name: {
       type: String,
       required: true,
