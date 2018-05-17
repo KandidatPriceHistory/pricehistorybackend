@@ -36,6 +36,7 @@ server.listen(config.port, () => {
 	mongoose.connect(config.db.uri, { useMongoClient: true });
 
 	const db = mongoose.connection;
+	const test = require('./api')
 
 	db.on('error', (err) => {
 	    console.error(err);
@@ -46,7 +47,6 @@ server.listen(config.port, () => {
 	    require('./routes/product');
 			require('./routes/retailer');
 			require('./routes/pricehistory');
-			require('./api');
 	    console.log(`Server is listening on port ${config.port}`);
 	});
 
