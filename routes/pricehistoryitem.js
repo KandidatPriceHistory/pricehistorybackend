@@ -14,13 +14,13 @@ const errors = require('restify-errors');
 /**
  * Model Schema
  */
-const Pricehistory = require('../models/pricehistory');
+const Pricehistory = require('../models/pricehistoryitem');
 
 
 	/**
 	 * POST
 	 */
-	server.post('/pricehistory', (req, res, next) => {
+	server.post('/pricehistoryitem', (req, res, next) => {
 		if (!req.is('application/json')) {
 			return next(
 				new errors.InvalidContentError("Expects 'application/json'"),
@@ -47,7 +47,7 @@ const Pricehistory = require('../models/pricehistory');
 	/**
 	 * LIST
 	 */
-	server.get('/pricehistory', (req, res, next) => {
+	server.get('/pricehistoryitem', (req, res, next) => {
 		Pricehistory.apiQuery(req.params, function(err, docs) {
 			if (err) {
 				console.error(err);
@@ -64,7 +64,7 @@ const Pricehistory = require('../models/pricehistory');
 	/**
 	 * GET
 	 */
-	server.get('/pricehistory/:pricehistory_id', (req, res, next) => {
+	server.get('/pricehistoryitem/:pricehistory_id', (req, res, next) => {
 		Pricehistory.findOne({ _id: req.params.pricehistory_id }, function(err, doc) {
 			if (err) {
 				console.error(err);
@@ -81,7 +81,7 @@ const Pricehistory = require('../models/pricehistory');
 	/**
 	 * UPDATE
 	 */
-	server.put('/pricehistory/:pricehistory_id', (req, res, next) => {
+	server.put('/pricehistoryitem/:pricehistory_id', (req, res, next) => {
 		if (!req.is('application/json')) {
 			return next(
 				new errors.InvalidContentError("Expects 'application/json'"),
@@ -125,7 +125,7 @@ const Pricehistory = require('../models/pricehistory');
 	/**
 	 * DELETE
 	 */
-	server.del('/pricehistory/:pricehistory_id', (req, res, next) => {
+	server.del('/pricehistoryitem/:pricehistory_id', (req, res, next) => {
 		Pricehistory.remove({ _id: req.params.pricehistory_id }, function(err) {
 			if (err) {
 				console.error(err);

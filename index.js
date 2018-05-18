@@ -46,7 +46,7 @@ server.listen(config.port, () => {
 	db.once('open', () => {
 	    require('./routes/product');
 			require('./routes/retailer');
-			require('./routes/pricehistory');
+			require('./routes/pricehistoryitem');
 	    console.log(`Server is listening on port ${config.port}`);
 	});
 
