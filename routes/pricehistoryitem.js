@@ -77,7 +77,7 @@ const Pricehistory = require('../models/pricehistoryitem');
 		});
 	});
 */
-	server.get('/pricehistoryitem/:productId/:retailerid', (req, res, next) => {
+	server.get('/pricehistories/:productId/:retailerid', (req, res, next) => {
 		// var productIdSliced = req.params.productId.slice(1)
 		Pricehistory.find({
 					productId: req.params.productId/*productIdSliced*/,
