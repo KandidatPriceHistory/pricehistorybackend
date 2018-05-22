@@ -18,11 +18,11 @@ const PricehistorySchema = new mongoose.Schema(
     price: {
 			type: Number,
 			required: false,
-		},/*
+		},
 		updatedAt: {
 			type: String,
 			required: false,
-		},*/
+		},
 	},
 	{ minimize: false },
 );
