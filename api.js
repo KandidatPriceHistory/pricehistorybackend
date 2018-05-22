@@ -31,7 +31,7 @@ function setUrl(priceHistoryId) {
 
 function loopGetProduct(urlList) {
   urlList.map(url => {
-    console.log('the url:',url);
+    // console.log('the url:',url);
     getProduct(url)
   })
 }
@@ -41,7 +41,7 @@ function getProduct(url){
     .then((response) => {
       for (var el=0; el<5; el++){
         const price = parseInt(response.data.offers[el].price)
-        console.log(price);
+        // console.log(price);
         /*saveProduct(
           response.data.id,
           response.data.offers[el].retailerId,

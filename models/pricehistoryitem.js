@@ -7,23 +7,27 @@ timestamps for us, and MongoDB will automatically generate a UUID called _id.
 */
 const PricehistorySchema = new mongoose.Schema(
 	{
-    productid: {
+    productId: {
       type: String,
-      required: true,
+      required: false,
     },
     retailerid: {
 			type: String,
-			required: true,
+			required: false,
 		},
     price: {
 			type: Number,
-			required: true,
-		},
+			required: false,
+		},/*
+		updatedAt: {
+			type: String,
+			required: false,
+		},*/
 	},
 	{ minimize: false },
 );
 
-PricehistorySchema.plugin(timestamps);
+// PricehistorySchema.plugin(timestamps);
 PricehistorySchema.plugin(mongooseStringQuery);
 
 const Pricehistory = mongoose.model('Pricehistory', PricehistorySchema);

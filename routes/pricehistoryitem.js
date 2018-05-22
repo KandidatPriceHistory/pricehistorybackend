@@ -11,14 +11,10 @@ DELETE /pricehistory/:pricehistory_id (Destroys a specific todo item in the queu
  */
 const errors = require('restify-errors');
 
-/**
- * Model Schema
- */
 const Pricehistory = require('../models/pricehistoryitem');
 
-
-	/**
-	 * POST
+	/*
+	POST
 	 */
 	server.post('/pricehistoryitem', (req, res, next) => {
 		if (!req.is('application/json')) {
@@ -29,23 +25,27 @@ const Pricehistory = require('../models/pricehistoryitem');
 
 		let data = req.body || {};
 //create an instance of model Pricehistory
-		let pricehistory = new Pricehistory(data);
-// save the new model instance, passing a callback
-		pricehistory.save(function(err) {
-			if (err) {
-				console.error(err);
-				return next(new errors.InternalError(err.message));
-				next();
-				//saved!
-			}
 
-			res.send(201);
+		for (i=0; i<data.length; i++){
+			let pricehistory = new Pricehistory(data[i]);
+
+
+// save the new model instance, passing a callback
+			pricehistory.save(function(err) {
+				if (err) {
+					console.error(err);
+					return next(new errors.InternalError(err.message));
+					next();
+				//saved!
+				}
+			})
+		}
+			res.send(201,data);
 			next();
-		});
 	});
 
-	/**
-	 * LIST
+	/*
+ LIST
 	 */
 	server.get('/pricehistoryitem', (req, res, next) => {
 		Pricehistory.apiQuery(req.params, function(err, docs) {
@@ -61,8 +61,8 @@ const Pricehistory = require('../models/pricehistoryitem');
 		});
 	});
 
-	/**
-	 * GET
+	/*
+	GET
 	 */
 	server.get('/pricehistoryitem/:pricehistory_id', (req, res, next) => {
 		Pricehistory.findOne({ _id: req.params.pricehistory_id }, function(err, doc) {
@@ -78,52 +78,8 @@ const Pricehistory = require('../models/pricehistoryitem');
 		});
 	});
 
-	/**
-	 * UPDATE
-	 */
-	server.put('/pricehistoryitem/:pricehistory_id', (req, res, next) => {
-		if (!req.is('application/json')) {
-			return next(
-				new errors.InvalidContentError("Expects 'application/json'"),
-			);
-		}
-
-		let data = req.body || {};
-
-		if (!data._id) {
-			data = Object.assign({}, data, { _id: req.params.pricehistory_id });
-		}
-
-		Pricehistory.findOne({ _id: req.params.pricehistory_id }, function(err, doc) {
-			if (err) {
-				console.error(err);
-				return next(
-					new errors.InvalidContentError(err.errors.name.message),
-				);
-			} else if (!doc) {
-				return next(
-					new errors.ResourceNotFoundError(
-						'The resource you requested could not be found.',
-					),
-				);
-			}
-
-			Pricehistory.update({ _id: data._id }, data, function(err) {
-				if (err) {
-					console.error(err);
-					return next(
-						new errors.InvalidContentError(err.errors.name.message),
-					);
-				}
-
-				res.send(200, data);
-				next();
-			});
-		});
-	});
-
-	/**
-	 * DELETE
+	/*
+	DELETE
 	 */
 	server.del('/pricehistoryitem/:pricehistory_id', (req, res, next) => {
 		Pricehistory.remove({ _id: req.params.pricehistory_id }, function(err) {
