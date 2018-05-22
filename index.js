@@ -1,36 +1,25 @@
 
-//entry point for our REST API (noga med ordiningen av resurser
-//1. module dep. 2. server inizialisation 3. Middleware 4. start server)
-
-/**
- * Module Dependencies
- */
- // const getProduct = require('./api.js');
+//Module Dependencies
 const config = require('./config');
 const restify = require('restify');
 const mongoose = require('mongoose');
 const restifyPlugins = require('restify-plugins');
 
-/**
-  * Initialize Server
-  */
+//Initialize Server
 global.server = restify.createServer({
 	name: config.name,
 	version: config.version,
 });
 
-/**
-  * Middleware
-  */
+//Middleware
 server.use(restifyPlugins.jsonBodyParser({ mapParams: true }));
 server.use(restifyPlugins.acceptParser(server.acceptable));
 server.use(restifyPlugins.queryParser({ mapParams: true }));
 server.use(restifyPlugins.fullResponse());
 
-/**
-  * Start Server, Connect to DB & Require Routes
-  */
+//Start Server, Connect to DB & Require Routes
 server.listen(config.port, () => {
+	
 	// establish connection to mongodb
 	mongoose.Promise = global.Promise;
 	mongoose.connect(config.db.uri, { useMongoClient: true });
@@ -49,6 +38,4 @@ server.listen(config.port, () => {
 			require('./routes/pricehistoryitem');
 	    console.log(`Server is listening on port ${config.port}`);
 	});
-
-	// getProduct();
 });

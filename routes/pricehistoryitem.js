@@ -1,14 +1,4 @@
-/*
-CRUD operations:
-POST /pricehistory (Creates a todo item)
-GET /pricehistory (Lists all todos in the queue)
-GET /pricehistory/:pricehistory_id (Gets a specific todo item in the queue)
-PUT /pricehistory/:pricehistory_id (Updates a specific todo item in the queue)
-DELETE /pricehistory/:pricehistory_id (Destroys a specific todo item in the queue)*/
 
-/**
- * Module Dependencies
- */
 const errors = require('restify-errors');
 
 const Pricehistory = require('../models/pricehistoryitem');
@@ -22,13 +12,10 @@ const Pricehistory = require('../models/pricehistoryitem');
 				new errors.InvalidContentError("Expects 'application/json'"),
 			);
 		}
-
 		let data = req.body || {};
-//create an instance of model Pricehistory
 
 		for (i=0; i<data.length; i++){
 			let pricehistory = new Pricehistory(data[i]);
-
 
 // save the new model instance, passing a callback
 			pricehistory.save(function(err) {
@@ -40,8 +27,8 @@ const Pricehistory = require('../models/pricehistoryitem');
 				}
 			})
 		}
-			res.send(201,data);
-			next();
+		res.send(201,data);
+		next();
 	});
 
 	/*
@@ -62,9 +49,8 @@ const Pricehistory = require('../models/pricehistoryitem');
 	});
 
 	server.get('/pricehistories/:productId/:retailerid', (req, res, next) => {
-		// var productIdSliced = req.params.productId.slice(1)
 		Pricehistory.find({
-					productId: req.params.productId/*productIdSliced*/,
+					productId: req.params.productId,
 		 			retailerid: req.params.retailerid
 					},
 		function(err, doc) {

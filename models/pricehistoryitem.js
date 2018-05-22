@@ -2,9 +2,7 @@
 const mongoose = require('mongoose');
 const mongooseStringQuery = require('mongoose-string-query');
 const timestamps = require('mongoose-timestamp');
-/* Our `mongoose-timestamp` module will add the createdAt and updatedAt
-timestamps for us, and MongoDB will automatically generate a UUID called _id.
-*/
+
 const PricehistorySchema = new mongoose.Schema(
 	{
     productId: {
@@ -17,10 +15,6 @@ const PricehistorySchema = new mongoose.Schema(
 		},
     price: {
 			type: Number,
-			required: false,
-		},
-		updatedAt: {
-			type: String,
 			required: false,
 		},
 	},
