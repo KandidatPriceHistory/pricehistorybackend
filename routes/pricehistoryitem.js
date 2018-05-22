@@ -63,9 +63,27 @@ const Pricehistory = require('../models/pricehistoryitem');
 
 	/*
 	GET
-	 */
+
 	server.get('/pricehistoryitem/:pricehistory_id', (req, res, next) => {
 		Pricehistory.findOne({ _id: req.params.pricehistory_id }, function(err, doc) {
+			if (err) {
+				console.error(err);
+				return next(
+					new errors.InvalidContentError(err.errors.name.message),
+				);
+			}
+			res.send(doc);
+			next();
+		});
+	});
+*/
+	server.get('/pricehistoryitem/:productId/:retailerid', (req, res, next) => {
+		// var productIdSliced = req.params.productId.slice(1)
+		Pricehistory.find({
+					productId: req.params.productId/*productIdSliced*/,
+		 			retailerid: req.params.retailerid
+					},
+		function(err, doc) {
 			if (err) {
 				console.error(err);
 				return next(
