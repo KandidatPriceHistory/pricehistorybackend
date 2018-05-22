@@ -16,7 +16,7 @@ const Pricehistory = require('../models/pricehistoryitem');
 	/*
 	POST
 	 */
-	server.post('/pricehistoryitem', (req, res, next) => {
+	server.post('/pricehistories', (req, res, next) => {
 		if (!req.is('application/json')) {
 			return next(
 				new errors.InvalidContentError("Expects 'application/json'"),
@@ -47,7 +47,7 @@ const Pricehistory = require('../models/pricehistoryitem');
 	/*
  LIST
 	 */
-	server.get('/pricehistoryitem', (req, res, next) => {
+	server.get('/pricehistories', (req, res, next) => {
 		Pricehistory.apiQuery(req.params, function(err, docs) {
 			if (err) {
 				console.error(err);
@@ -61,22 +61,6 @@ const Pricehistory = require('../models/pricehistoryitem');
 		});
 	});
 
-	/*
-	GET
-
-	server.get('/pricehistoryitem/:pricehistory_id', (req, res, next) => {
-		Pricehistory.findOne({ _id: req.params.pricehistory_id }, function(err, doc) {
-			if (err) {
-				console.error(err);
-				return next(
-					new errors.InvalidContentError(err.errors.name.message),
-				);
-			}
-			res.send(doc);
-			next();
-		});
-	});
-*/
 	server.get('/pricehistories/:productId/:retailerid', (req, res, next) => {
 		// var productIdSliced = req.params.productId.slice(1)
 		Pricehistory.find({
@@ -99,7 +83,7 @@ const Pricehistory = require('../models/pricehistoryitem');
 	/*
 	DELETE
 	 */
-	server.del('/pricehistoryitem/:pricehistory_id', (req, res, next) => {
+	server.del('/pricehistories/:pricehistory_id', (req, res, next) => {
 		Pricehistory.remove({ _id: req.params.pricehistory_id }, function(err) {
 			if (err) {
 				console.error(err);
