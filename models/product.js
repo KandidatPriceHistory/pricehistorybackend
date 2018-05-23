@@ -1,11 +1,4 @@
-/*
-Models are fancy constructors compiled from our Schema definitions.
-Basically, they allow us to tell the database what to store and instances
-of these models represent documents which can be saved and retrieved from
-our database via Mongoose. All document creation and retrieval from the
-database is handled by these models.
-- https://getstream.io/blog/building-rest-api-node-js-restify-mongodb/
-*/
+
 const mongoose = require('mongoose');
 const mongooseStringQuery = require('mongoose-string-query');
 const timestamps = require('mongoose-timestamp');

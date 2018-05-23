@@ -55,7 +55,7 @@ const Product = require('../models/product');
 	 * GET
 	 */
 	server.get('/products/:product_id', (req, res, next) => {
-		Product.findOne({ _id: req.params.product_id }, function(err, doc) {
+		Product.findOne({ id: req.params.product_id }, function(err, doc) {
 			if (err) {
 				console.error(err);
 				return next(
