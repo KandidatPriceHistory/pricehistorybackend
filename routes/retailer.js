@@ -37,6 +37,7 @@ const Retailer = require('../models/retailer');
 	 * LIST
 	 */
 	server.get('/retailers', (req, res, next) => {
+		console.log('just list all retailers');
 		Retailer.apiQuery(req.params, function(err, docs) {
 			if (err) {
 				console.error(err);
@@ -53,16 +54,23 @@ const Retailer = require('../models/retailer');
 	/**
 	 * GET
 	 */
-	server.get('/retailers/:retailer_id', (req, res, next) => {
-		Retailer.findOne({ _id: req.params.retailer_id }, function(err, doc) {
+
+	server.get('/retailers/:productId', (req, res, next) => {
+		Retailer.apiQuery(req.params, function(err, docs) {
 			if (err) {
 				console.error(err);
 				return next(
 					new errors.InvalidContentError(err.errors.name.message),
 				);
-			}
-
-			res.send(doc);
+			const findRetailers = []
+			docs.map(retailer => {
+          retailer.retailersProducts.map(product => {
+              if (product.productid === req.params.productId){
+                findRetailers.push(retailer)
+              }
+          })
+        })
+			res.send(findRetailers);
 			next();
 		});
 	});
