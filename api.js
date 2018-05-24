@@ -33,7 +33,6 @@ function getProduct(url){
     .then((response) => {
       for (var el=0; el<10; el++){
         const price = parseInt(response.data.offers[el].price)
-
         saveProduct(
           response.data.id,
           response.data.offers[el].retailerId,

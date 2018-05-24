@@ -21,7 +21,7 @@ const PricehistorySchema = new mongoose.Schema(
 	{ minimize: false },
 );
 
-// PricehistorySchema.plugin(timestamps);
+PricehistorySchema.plugin(timestamps);
 PricehistorySchema.plugin(mongooseStringQuery);
 
 const Pricehistory = mongoose.model('Pricehistory', PricehistorySchema);
