@@ -37,7 +37,6 @@ const Retailer = require('../models/retailer');
 	 * LIST
 	 */
 	server.get('/retailers', (req, res, next) => {
-		console.log('just list all retailers');
 		Retailer.apiQuery(req.params, function(err, docs) {
 			if (err) {
 				console.error(err);
@@ -62,7 +61,7 @@ const Retailer = require('../models/retailer');
 				return next(
 					new errors.InvalidContentError(err.errors.name.message),
 				);
-			};
+			}
 			const findRetailers = []
 			docs.map(retailer => {
           retailer.retailersProducts.map(product => {

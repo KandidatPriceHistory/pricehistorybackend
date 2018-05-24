@@ -60,7 +60,7 @@ const Pricehistory = require('../models/pricehistoryitem');
 					new errors.InvalidContentError(err.errors.name.message),
 				);
 			}
-
+			
 			res.send(doc);
 			next();
 		});

@@ -7,10 +7,14 @@ const PriceHistoryItem = require('./models/pricehistoryitem');
 const priceHistoryId = ["1-4257585","1-4496447","1-4540096","1-3891671","1-4502611"];
 const urlList = []
 
+
 function updateProducts(){
   loopGetProduct(setUrl(priceHistoryId))
   console.log('updated products');
-  setTimeout(updateProducts,86400000)
+  /* TODO
+  schedule.scheduleJob('0 0 * * *', () => {
+    updateProducts()
+  })*/
 }
 
 function setUrl(priceHistoryId) {

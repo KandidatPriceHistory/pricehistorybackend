@@ -19,13 +19,13 @@ server.use(restifyPlugins.fullResponse());
 
 //Start Server, Connect to DB & Require Routes
 server.listen(config.port, () => {
-	
+
 	// establish connection to mongodb
 	mongoose.Promise = global.Promise;
 	mongoose.connect(config.db.uri, { useMongoClient: true });
 
 	const db = mongoose.connection;
-	const test = require('./api')
+	//const getData = require('./api')
 
 	db.on('error', (err) => {
 	    console.error(err);
