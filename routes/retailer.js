@@ -53,6 +53,23 @@ const Retailer = require('../models/retailer');
 	/**
 	 * GET
 	 */
+server.get('/retailers/:productid/:retailerid', (req, res, next) => {
+	 Retailer.findOne({
+		 retailerid: req.params.retailerid
+	 },
+		 function(err, doc) {
+	 		if (err) {
+	 			console.error(err);
+	 			return next(
+	 				new errors.InvalidContentError(err.errors.name.message),
+	 			);
+	 		}
+
+	 		res.send(doc);
+	 		next();
+	 	});
+	 });
+
 
 	server.get('/retailers/:productId', (req, res, next) => {
 		Retailer.apiQuery(req.params, function(err, docs) {
