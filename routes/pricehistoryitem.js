@@ -61,13 +61,15 @@ const Pricehistory = require('../models/pricehistoryitem');
 		let lastDate = ""
 
 		docs.map( obj => {
- 			const eachDate = new Date(obj.updatedAt);
- 			arrayOfDates.push(eachDate)
+ 			// const eachDate = new Date(obj.updatedAt);
+ 			arrayOfDates.push(obj.updatedAt)
 		})
 
-		const sortedArray = arrayOfDates.sort(function(a,b){
-			return b.date - a.date
-		});
+		const sortedArray = arrayOfDates.sort(
+			function(a,b){
+				return +new Date(b) - +new Date (a)
+			})
+		.reverse();
 
 		sortedArray.map(sortedDate => {
 			docs.forEach(obj => {
