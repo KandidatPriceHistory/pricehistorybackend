@@ -49,20 +49,39 @@ const Pricehistory = require('../models/pricehistoryitem');
 	});
 
 	server.get('/pricehistories/:productId/:retailerid', (req, res, next) => {
-		Pricehistory.find({
-					productId: req.params.productId,
-		 			retailerid: req.params.retailerid
-					},
-		function(err, doc) {
+		Pricehistory.apiQuery(req.params, function(err, docs) {
 			if (err) {
-				console.error(err);
+ 				console.error(err);
 				return next(
-					new errors.InvalidContentError(err.errors.name.message),
-				);
-			}
-			
-			res.send(doc);
-			next();
+				new errors.InvalidContentError(err.errors.name.message),
+			);
+		}
+		const arrayOfDates = []
+		const graphDataSorted = []
+		let lastDate = ""
+
+		docs.map( obj => {
+ 			const eachDate = new Date(obj.updatedAt);
+ 			arrayOfDates.push(eachDate)
+		})
+
+		const sortedArray = arrayOfDates.sort(function(a,b){
+			return b.date - a.date
+		});
+
+		sortedArray.map(sortedDate => {
+			docs.forEach(obj => {
+ 				const date = new Date(obj.updatedAt);
+				if (sortedDate.getTime() === date.getTime()) {
+					const newObj = { "price": obj.price, "date":date }
+					graphDataSorted.push(newObj)
+					lastDate = sortedDate;
+				}
+			})
+		})
+
+ 		res.send(graphDataSorted);
+		next();
 		});
 	});
 
