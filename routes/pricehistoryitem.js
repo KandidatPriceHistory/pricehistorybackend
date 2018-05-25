@@ -58,7 +58,7 @@ const Pricehistory = require('../models/pricehistoryitem');
 		}
 		const arrayOfDates = []
 		const graphDataSorted = []
-		let lastDate = ""
+		let lastDate = new Date()
 
 		docs.map( obj => {
  			// const eachDate = new Date(obj.updatedAt);
@@ -74,9 +74,10 @@ const Pricehistory = require('../models/pricehistoryitem');
 		sortedArray.map(sortedDate => {
 			docs.forEach(obj => {
  				const date = new Date(obj.updatedAt);
-				if (sortedDate.getTime() === date.getTime()) {
+				if (sortedDate.getTime() === date.getTime() && sortedDate.getDate() != lastDate.getDate()) {
 					const newObj = { "price": obj.price, "date":date }
 					graphDataSorted.push(newObj)
+					console.log('lastDate:',lastDate,'sortedDate:',sortedDate);
 					lastDate = sortedDate;
 				}
 			})
