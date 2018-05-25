@@ -48,6 +48,7 @@ const Pricehistory = require('../models/pricehistoryitem');
 		});
 	});
 
+/* get specific price data of one product and one store */
 	server.get('/pricehistories/:productId/:retailerid', (req, res, next) => {
 		Pricehistory.apiQuery(req.params, function(err, docs) {
 			if (err) {
@@ -61,7 +62,6 @@ const Pricehistory = require('../models/pricehistoryitem');
 		let lastDate = new Date()
 
 		docs.map( obj => {
- 			// const eachDate = new Date(obj.updatedAt);
  			arrayOfDates.push(obj.updatedAt)
 		})
 
@@ -77,7 +77,6 @@ const Pricehistory = require('../models/pricehistoryitem');
 				if (sortedDate.getTime() === date.getTime() && sortedDate.getDate() != lastDate.getDate()) {
 					const newObj = { "price": obj.price, "date":date }
 					graphDataSorted.push(newObj)
-					console.log('lastDate:',lastDate,'sortedDate:',sortedDate);
 					lastDate = sortedDate;
 				}
 			})
