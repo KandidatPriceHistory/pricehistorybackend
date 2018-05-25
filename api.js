@@ -10,11 +10,6 @@ const urlList = []
 
 function updateProducts(){
   loopGetProduct(setUrl(priceHistoryId))
-  console.log('updated products');
-  /* TODO
-  schedule.scheduleJob('0 0 * * *', () => {
-    updateProducts()
-  })*/
 }
 
 function setUrl(priceHistoryId) {

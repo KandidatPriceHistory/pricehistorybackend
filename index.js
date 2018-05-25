@@ -4,6 +4,7 @@ const config = require('./config');
 const restify = require('restify');
 const mongoose = require('mongoose');
 const restifyPlugins = require('restify-plugins');
+const schedule = require('node-schedule')
 
 //Initialize Server
 global.server = restify.createServer({
@@ -25,7 +26,6 @@ server.listen(config.port, () => {
 	mongoose.connect(config.db.uri, { useMongoClient: true });
 
 	const db = mongoose.connection;
-	//const getData = require('./api')
 
 	db.on('error', (err) => {
 	    console.error(err);
@@ -37,5 +37,8 @@ server.listen(config.port, () => {
 			require('./routes/retailer');
 			require('./routes/pricehistoryitem');
 	    console.log(`Server is listening on port ${config.port}`);
+			schedule.scheduleJob('0 0 * * *', () => {
+		    require('./api');
+		  })
 	});
 });
