@@ -37,8 +37,10 @@ server.listen(config.port, () => {
 			require('./routes/retailer');
 			require('./routes/pricehistoryitem');
 	    console.log(`Server is listening on port ${config.port}`);
+
 			schedule.scheduleJob('0 0 * * *', () => {
 		    require('./api');
 		  })
+
 	});
 });
