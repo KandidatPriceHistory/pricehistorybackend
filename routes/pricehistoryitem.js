@@ -4,9 +4,8 @@ const errors = require('restify-errors');
 const Pricehistory = require('../models/pricehistoryitem');
 
 const db = require('../index')
-	/*
-	POST
-	 */
+
+	/* POST */
 server.post('/pricehistories', (req, res, next) => {
 	if (!req.is('application/json')) {
 		return next(
@@ -19,7 +18,7 @@ server.post('/pricehistories', (req, res, next) => {
 		let pricehistory = new Pricehistory(data[i]);
 
 // save the new model instance, passing a callback
-		pricehistory.save(function(err) {
+	pricehistory.save(function(err) {
 			if (err) {
 				console.error(err);
 				return next(new errors.InternalError(err.message));
@@ -32,9 +31,7 @@ server.post('/pricehistories', (req, res, next) => {
 	next();
 });
 
-	/*
- LIST
-	 */
+	/* LIST */
 server.get('/pricehistories', (req, res, next) => {
 		Pricehistory.apiQuery(req.params, function(err, docs) {
 			if (err) {
@@ -43,7 +40,6 @@ server.get('/pricehistories', (req, res, next) => {
 					new errors.InvalidContentError(err.errors.name.message),
 				);
 			}
-
 			res.send(docs);
 			next();
 		});
@@ -83,52 +79,20 @@ server.get('/pricehistories/:productId/:retailerid/min', (req, res, next) => {
 		})
 });
 
-/* get specific price data of one product and one store */
+/* get specific price data of one product and one store sorted */
 server.get('/pricehistories/:productId/:retailerid', (req, res, next) => {
-/*
-		PriceHistory.find().sort({updatedAt: -1},
-			function(err, cursor){
-				console.error(err);
-				return next(
-				new errors.InvalidContentError(err.errors.name.message),
-			)
-		})
-			res.send(docs)
-			next();
-		})
-		*/
-	Pricehistory.apiQuery(req.params, function(err, docs) {
+		Pricehistory.find({
+				productId: req.params.productId,
+				retailerid: req.params.retailerid
+			}).sort({updatedAt:'asc'}).exec(function(err, docs) {
+	//Pricehistory.apiQuery(req.params, function(err, docs) {
 		if (err) {
  				console.error(err);
 				return next(
 				new errors.InvalidContentError(err.errors.name.message),
 			);
 		}
-		const arrayOfDates = []
-		const graphDataSorted = []
-		let lastDate = new Date()
-
-		docs.map( obj => {
- 			arrayOfDates.push(obj.updatedAt)
-		})
-
-		const sortedArray = arrayOfDates.sort(
-			function(a,b){
-				return +new Date(b) - +new Date (a)
-			}).reverse();
-
-		sortedArray.map(sortedDate => {
-			docs.forEach(obj => {
- 				const date = new Date(obj.updatedAt);
-				if (sortedDate.getTime() === date.getTime() && sortedDate.getDate() != lastDate.getDate()) {
-					const newObj = { "price": obj.price, "date":date }
-					graphDataSorted.push(newObj)
-					lastDate = sortedDate;
-				}
-			})
-		})
-
- 		res.send(graphDataSorted);
+		res.send(docs)
 		next();
 	});
 })

@@ -1,18 +1,12 @@
 
-/**
- * Module Dependencies
- */
+// Module Dependencies
 const errors = require('restify-errors');
 
-/**
- * Model Schema
- */
+// Model schema
 const Product = require('../models/product');
 
-	/**
-	 * POST
-	 */
-	server.post('/products', (req, res, next) => {
+	/* POST */
+server.post('/products', (req, res, next) => {
 		if (!req.is('application/json')) {
 			return next(
 				new errors.InvalidContentError("Expects 'application/json'"),
@@ -32,12 +26,10 @@ const Product = require('../models/product');
 			res.send(201);
 			next();
 		});
-	});
+});
 
-	/**
-	 * LIST
-	 */
-	server.get('/products', (req, res, next) => {
+	/* LIST */
+server.get('/products', (req, res, next) => {
 		Product.apiQuery(req.params, function(err, docs) {
 			if (err) {
 				console.error(err);
@@ -49,12 +41,10 @@ const Product = require('../models/product');
 			res.send(docs);
 			next();
 		});
-	});
+});
 
-	/**
-	 * GET
-	 */
-	server.get('/products/:product_id', (req, res, next) => {
+	/* GET */
+server.get('/products/:product_id', (req, res, next) => {
 		Product.findOne({ id: req.params.product_id }, function(err, doc) {
 			if (err) {
 				console.error(err);
@@ -66,12 +56,10 @@ const Product = require('../models/product');
 			res.send(doc);
 			next();
 		});
-	});
+});
 
-	/**
-	 * UPDATE
-	 */
-	server.put('/products/:product_id', (req, res, next) => {
+	/* UPDATE */
+server.put('/products/:product_id', (req, res, next) => {
 		if (!req.is('application/json')) {
 			return next(
 				new errors.InvalidContentError("Expects 'application/json'"),
@@ -110,12 +98,10 @@ const Product = require('../models/product');
 				next();
 			});
 		});
-	});
+});
 
-	/**
-	 * DELETE
-	 */
-	server.del('/products/:product_id', (req, res, next) => {
+	/* DELETE */
+server.del('/products/:product_id', (req, res, next) => {
 		Product.remove({ _id: req.params.product_id }, function(err) {
 			if (err) {
 				console.error(err);
@@ -127,4 +113,4 @@ const Product = require('../models/product');
 			res.send(204);
 			next();
 		});
-	});
+});

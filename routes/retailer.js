@@ -1,17 +1,10 @@
-/**
- * Module Dependencies
- */
+
 const errors = require('restify-errors');
 
-/**
- * Model Schema
- */
 const Retailer = require('../models/retailer');
 
-	/**
-	 * POST
-	 */
-	server.post('/retailers', (req, res, next) => {
+	/* POST */
+server.post('/retailers', (req, res, next) => {
 		if (!req.is('application/json')) {
 			return next(
 				new errors.InvalidContentError("Expects 'application/json'"),
@@ -31,12 +24,10 @@ const Retailer = require('../models/retailer');
 			res.send(201);
 			next();
 		});
-	});
+});
 
-	/**
-	 * LIST
-	 */
-	server.get('/retailers', (req, res, next) => {
+	/* LIST */
+server.get('/retailers', (req, res, next) => {
 		Retailer.apiQuery(req.params, function(err, docs) {
 			if (err) {
 				console.error(err);
@@ -48,11 +39,9 @@ const Retailer = require('../models/retailer');
 			res.send(docs);
 			next();
 		});
-	});
+});
 
-	/**
-	 * GET
-	 */
+	/* GET */
 server.get('/retailers/:productid/:retailerid', (req, res, next) => {
 	 Retailer.findOne({
 		 retailerid: req.params.retailerid
@@ -67,11 +56,11 @@ server.get('/retailers/:productid/:retailerid', (req, res, next) => {
 
 	 		res.send(doc);
 	 		next();
-	 	});
 	 });
+});
 
-
-	server.get('/retailers/:productId', (req, res, next) => {
+/* find the right retailers of the product */
+server.get('/retailers/:productId', (req, res, next) => {
 		Retailer.apiQuery(req.params, function(err, docs) {
 			if (err) {
 				console.error(err);
@@ -90,12 +79,10 @@ server.get('/retailers/:productid/:retailerid', (req, res, next) => {
 			res.send(findRetailers);
 			next();
 		});
-	});
+});
 
-	/**
-	 * UPDATE
-	 */
-	server.put('/retailers/:retailer_id', (req, res, next) => {
+	/* UPDATE */
+server.put('/retailers/:retailer_id', (req, res, next) => {
 		if (!req.is('application/json')) {
 			return next(
 				new errors.InvalidContentError("Expects 'application/json'"),
@@ -134,12 +121,10 @@ server.get('/retailers/:productid/:retailerid', (req, res, next) => {
 				next();
 			});
 		});
-	});
+});
 
-	/**
-	 * DELETE
-	 */
-	server.del('/retailers/:retailer_id', (req, res, next) => {
+	/* DELETE */
+server.del('/retailers/:retailer_id', (req, res, next) => {
 		Retailer.remove({ _id: req.params.retailer_id }, function(err) {
 			if (err) {
 				console.error(err);
@@ -151,4 +136,4 @@ server.get('/retailers/:productid/:retailerid', (req, res, next) => {
 			res.send(204);
 			next();
 		});
-	});
+});
