@@ -61,7 +61,7 @@ server.get('/pricehistories/:productId/:retailerid/max', (req, res, next) => {
 						new errors.InvalidContentError(err.errors.name.message),
 					);
 				}
-				res.send(docs);
+				res.send(docs[0]);
 				next();
 		})
 });
@@ -78,7 +78,7 @@ server.get('/pricehistories/:productId/:retailerid/min', (req, res, next) => {
 						new errors.InvalidContentError(err.errors.name.message),
 					);
 				}
-				res.send(docs);
+				res.send(docs[0]);
 				next();
 		})
 });
