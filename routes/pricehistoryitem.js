@@ -81,19 +81,51 @@ server.get('/pricehistories/:productId/:retailerid/min', (req, res, next) => {
 
 /* get specific price data of one product and one store sorted */
 server.get('/pricehistories/:productId/:retailerid', (req, res, next) => {
-		Pricehistory.find({
-				productId: req.params.productId,
-				retailerid: req.params.retailerid
-			}).sort({updatedAt:'asc'}).exec(function(err, docs) {
-	//Pricehistory.apiQuery(req.params, function(err, docs) {
+	/*
+	 -- the more clean soltion below but its returning multiple prices for one date
+	*/
+	/* Pricehistory.find({
+			productId: req.params.productId,
+			retailerid: req.params.retailerid
+		}).sort({updatedAt:'asc'}).exec(function(err, docs) ... */
+
+	/*
+	 -- the ugly solution below but it works
+	*/
+	Pricehistory.apiQuery(req.params, function(err, docs) {
 		if (err) {
  				console.error(err);
 				return next(
 				new errors.InvalidContentError(err.errors.name.message),
 			);
+
 		}
-		res.send(docs)
-		next();
+		const arrayOfDates = []
+		const graphDataSorted = []
+		let lastDate = new Date()
+
+		docs.map( obj => {
+			arrayOfDates.push(obj.updatedAt)
+		})
+
+		const sortedArray = arrayOfDates.sort(
+ 			function(a,b){
+ 				return +new Date(b) - +new Date (a)
+			}).reverse();
+
+		sortedArray.map(sortedDate => {
+				docs.forEach(obj => {
+					const date = new Date(obj.updatedAt);
+	 				if (sortedDate.getTime() === date.getTime() && sortedDate.getDate() != lastDate.getDate()) {
+	 					const newObj = { "price": obj.price, "date":date }
+	 					graphDataSorted.push(newObj)
+	 					lastDate = sortedDate;
+	 				}
+	 			})
+	 		})
+
+	  res.send(graphDataSorted);
+	 	next();
 	});
 })
 
