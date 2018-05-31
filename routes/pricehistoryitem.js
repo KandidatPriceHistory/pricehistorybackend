@@ -84,6 +84,7 @@ server.get('/pricehistories/:productId/:retailerid', (req, res, next) => {
 	/*
 	 -- the more clean soltion below but its returning multiple prices for one date
 	*/
+	
 	/* Pricehistory.find({
 			productId: req.params.productId,
 			retailerid: req.params.retailerid
